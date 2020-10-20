@@ -46,10 +46,7 @@ docker run -it --rm --name kafka -p 9092:9092 -e KAFKA_MESSAGE_MAX_BYTES=1048576
 
 docker run -it --rm --name connect -p 8083:8083 -e GROUP_ID=1 -e CONFIG_STORAGE_TOPIC=my_connect_configs -e OFFSET_STORAGE_TOPIC=my_connect_offsets -e OFFSET_FLUSH_TIMEOUT_MS=60000 -e OFFSET_FLUSH_INTERVAL_MS=10000 -e CONNECT_MAX_REQUEST_SIZE=10485760 -e CONNECT_PRODUCER_MAX_REQUEST_SIZE=10485760 -e STATUS_STORAGE_TOPIC=my_connect_statuses --link zookeeper:zookeeper --link kafka:kafka debezium/connect:1.2
 
-
- curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ -d "{ \"name\": \"test-connector\", \"config\": { \"connector.class\": \"io.debezium.connector.postgresql.PostgresConnector\", \"tasks.max\": \"1\", \"database.hostname\": \"psql2.tandemservice.ru\", \"database.port\": \"5432\", \"database.user\": \"postgres\", \"database.password\": \"postgres\", \"database.dbname\": \"nsitrunk_uni\",\"database.server.id\": \"11112\", \"database.server.name\": \"nsitrunk_uni\", \"database.whitelist\": \"nsitrunk_uni\", \"database.history.kafka.bootstrap.servers\":\"kafka:9092\", \"database.history.kafka.topic\": \"dbhistory.nsitrunk_uni\", \"tasks.max\": \"1\", \"max.queue.size\": \"81290\",\"max.batch.size\": \"20480\", \"plugin.name\": \"pgoutput\"}}"
-
-  docker run -it --rm --name watcher --link zookeeper:zookeeper --link kafka:kafka debezium/kafka:1.2 watch-topic -a -k nsitrunk_uni.public.person_t
+docker run -it --rm --name watcher --link zookeeper:zookeeper --link kafka:kafka debezium/kafka:1.2 watch-topic -a -k nsitrunk_uni.public.person_t
 
 #################################################
 #REMOTE KAFKA and ZOO
@@ -91,25 +88,3 @@ docker run -it --rm --name apicurio -p 8082:8082 apicurio/apicurio-registry-mem:
 
  curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ -d "{ \"name\": \"test-connector1\", \"config\": { \"connector.class\": \"io.debezium.connector.postgresql.PostgresConnector\", \"tasks.max\": \"1\", \"database.hostname\": \"localhost\", \"database.port\": \"5432\", \"database.user\": \"postgres\", \"database.password\": \"postgres\", \"database.dbname\": \"testDbTrunk\",\"database.server.id\": \"1111144\", \"database.server.name\": \"localpostgres\", \"database.whitelist\": \"testDbTrunk\", \"database.history.kafka.bootstrap.servers\":\"kafka:9092\", \"database.history.kafka.topic\": \"dbhistory.testDbTrunk\", \"tasks.max\": \"1\", \"plugin.name\": \"pgoutput\", \"max.queue.size\": \"81290\",\"max.batch.size\": \"20480\", \"key.converter\":\"io.confluent.connect.avro.AvroConverter\",\"key.converter.schema.registry.url\":\"http://localhost:8082\", \"value.converter\":\"io.confluent.connect.avro.AvroConverter\", \"value.converter.schema.registry.url\":\"http://localhost:8082\"}}"
 ###########################################################
-
- curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ \
- -d "{ \
- \"name\": \"test-connector\",\
-  \"config\": \
-  { \"connector.class\": \"io.debezium.connector.postgresql.PostgresConnector\",\
-   \"tasks.max\": \"1\",\
-    \"database.hostname\": \"psql2.tandemservice.ru\", 
-    \"database.port\": \"5432\",\
-     \"database.user\": \"postgres\",\
-      \"database.password\": \"postgres\", \
-      \"database.dbname\": \"nsitrunk_uni\",\
-      \"database.server.id\": \"11112\", \
-      \"database.server.name\": \"nsitrunk_uni\", \
-      \"database.whitelist\": \"nsitrunk_uni\", \
-      \"database.history.kafka.bootstrap.servers\":\"kafka:9092\",\
-       \"database.history.kafka.topic\": \"dbhistory.nsitrunk_uni\", \
-       \"tasks.max\": \"1\", \
-       \"max.queue.size\": \"81290\",\
-       \"max.batch.size\": \"20480\", \
-       \"plugin.name\": \"pgoutput\"}}"
-
