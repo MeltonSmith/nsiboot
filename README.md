@@ -25,7 +25,7 @@ PostgreSQL
         #or use a volume for pg container (like I did in docker-compose) and change the options there manually
 ZooKeeper
 --------------------------------------
-    -  docker run -it --rm --name zookeeper -p 2181:2181 -p 2888:2888 -p 3888:3888 debezium/zookeeper:1.2
+    -  docker run -it --rm --name zookeeper -p 2181:2181 -p 2888:2888 -p 3888:3888 debezium/zookeeper:1.3
     
 Kafka
 --------------------------------------
@@ -35,7 +35,7 @@ Kafka
         -e KAFKA_OFFSET_STORAGE_REPLICATION_FACTOR=1
         -e KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS=3 
         --link zookeeper:zookeeper 
-        debezium/kafka:1.2
+        debezium/kafka:1.3
         
 Debezium Connect
 --------------------------------------
@@ -46,7 +46,7 @@ Debezium Connect
     -e CONNECT_PRODUCER_MAX_REQUEST_SIZE=10485760 
     -e STATUS_STORAGE_TOPIC=my_connect_statuses 
     --link zookeeper:zookeeper 
-    --link kafka:kafka debezium/connect:1.2
+    --link kafka:kafka debezium/connect:1.3
 
 Watcher container example
 --------------------------------------
@@ -54,7 +54,7 @@ Watcher container example
      docker run -it --rm 
      --name watcher 
      --link zookeeper:zookeeper 
-     -link kafka:kafka debezium/kafka:1.2 watch-topic -a 
+     -link kafka:kafka debezium/kafka:1.3 watch-topic -a 
      -k nsitrunk_uni.public.person_t
      
      Remote Kafka and Zoo:
@@ -101,11 +101,14 @@ Deleting a connector
         
 Monitoring
 -------------------------------------     
-     #monitor example. $dbname.public.$tableName
-      docker run -it --rm --name watcher --link zookeeper:zookeeper --link kafka:kafka debezium/kafka:1.2 watch-topic -a -k test.public.person_t      
+     #monitor example. $dbname.public.$tableName (link legacy)
+      docker run -it --rm --name watcher --link zookeeper:zookeeper --link kafka:kafka debezium/kafka:1.3 watch-topic -a -k testDbTrunk.public.abstractparagraphkey_t      
+      
+      (default networking with net created by docker compose)
+      docker run -it --rm --name watcher --net resources_default -e ZOOKEEPER_CONNECT=zookeeper:2181 -e KAFKA_BROKER=kafka:9092 debezium/kafka:1.3 watch-topic -a -k testDbTrunk.public.abstractparagraphkey_t      
      
      #list of topics
-       docker run -it --rm --link zookeeper:zookeeper debezium/kafka list-topics
+       docker run -it --rm --net resources_default -e ZOOKEEPER_CONNECT=zookeeper:2181  debezium/kafka:1.3 list-topics
       
      #monitoring via a standart consumer (use exec bash inside of kafka container) in case of a separate machine with Kafka replace 0.0.0.0 with localhost
-       bin/kafka-console-consumer.sh --topic testDbTrunk.public.accessmatrix_t --from-beginning --bootstrap-server 0.0.0.0:9092
+       bin/kafka-console-consumer.sh --topic testDbTrunk.public.abstractemployeeextract_t --from-beginning --bootstrap-server 0.0.0.0:9092

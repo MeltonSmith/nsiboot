@@ -78,13 +78,14 @@ docker run -it --rm --name apicurio -p 8082:8082 apicurio/apicurio-registry-mem:
  -e KEY_CONVERTER=io.apicurio.registry.utils.converter.AvroConverter \
  -e VALUE_CONVERTER=io.apicurio.registry.utils.converter.AvroConverter \
  -e CONNECT_KEY_CONVERTER=io.apicurio.registry.utils.converter.AvroConverter \
- -e CONNECT_KEY_CONVERTER_APICURIO.REGISTRY_URL=http://apicurio:8082 \
+ -e CONNECT_KEY_CONVERTER_APICURIO.REGISTRY_URL=http://apicurio:8080 \
  -e CONNECT_KEY_CONVERTER_APICURIO.REGISTRY_GLOBAL-ID=io.apicurio.registry.utils.serde.strategy.GetOrCreateIdStrategy \
  -e CONNECT_VALUE_CONVERTER=io.apicurio.registry.utils.converter.AvroConverter \
- -e CONNECT_VALUE_CONVERTER_APICURIO_REGISTRY_URL=http://apicurio:8082 \
+ -e CONNECT_VALUE_CONVERTER_APICURIO_REGISTRY_URL=http://apicurio:8080 \
  -e CONNECT_VALUE_CONVERTER_APICURIO_REGISTRY_GLOBAL-ID=io.apicurio.registry.utils.serde.strategy.GetOrCreateIdStrategy \
  --link zookeeper:zookeeper \
  --link kafka:kafka debezium/connect:1.3
 
- curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ -d "{ \"name\": \"test-connector1\", \"config\": { \"connector.class\": \"io.debezium.connector.postgresql.PostgresConnector\", \"tasks.max\": \"1\", \"database.hostname\": \"localhost\", \"database.port\": \"5432\", \"database.user\": \"postgres\", \"database.password\": \"postgres\", \"database.dbname\": \"testDbTrunk\",\"database.server.id\": \"1111144\", \"database.server.name\": \"localpostgres\", \"database.whitelist\": \"testDbTrunk\", \"database.history.kafka.bootstrap.servers\":\"kafka:9092\", \"database.history.kafka.topic\": \"dbhistory.testDbTrunk\", \"tasks.max\": \"1\", \"plugin.name\": \"pgoutput\", \"max.queue.size\": \"81290\",\"max.batch.size\": \"20480\", \"key.converter\":\"io.confluent.connect.avro.AvroConverter\",\"key.converter.schema.registry.url\":\"http://localhost:8082\", \"value.converter\":\"io.confluent.connect.avro.AvroConverter\", \"value.converter.schema.registry.url\":\"http://localhost:8082\"}}"
+#Avro-configured curl
+ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ -d "{ \"name\": \"avroConnector\", \"config\": { \"connector.class\": \"io.debezium.connector.postgresql.PostgresConnector\", \"tasks.max\": \"1\", \"database.hostname\": \"postgres\", \"database.port\": \"5432\", \"database.user\": \"postgres\", \"database.password\": \"postgres\", \"database.dbname\": \"testDbTrunk\",\"database.server.id\": \"1111144\", \"database.server.name\": \"localpostgres\", \"database.whitelist\": \"testDbTrunk\", \"database.history.kafka.bootstrap.servers\":\"kafka:9092\", \"database.history.kafka.topic\": \"dbhistory.testDbTrunk\", \"tasks.max\": \"1\", \"plugin.name\": \"pgoutput\", \"max.queue.size\": \"81290\",\"max.batch.size\": \"20480\", \"key.converter\":\"io.confluent.connect.avro.AvroConverter\",\"key.converter.schema.registry.url\":\"http://apicurio:8080/api\", \"value.converter\":\"io.confluent.connect.avro.AvroConverter\", \"value.converter.schema.registry.url\":\"http://apicurio:8080/api\", \"key.converter.apicurio.registry.global-id\":\"io.apicurio.registry.utils.serde.strategy.GetOrCreateIdStrategy\", \"value.converter.apicurio.registry.global-id\":\"io.apicurio.registry.utils.serde.strategy.GetOrCreateIdStrategy\"}}"
 ###########################################################

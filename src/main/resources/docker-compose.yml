@@ -16,11 +16,11 @@ services:
       - "2181:3888"
       - "2888:3888"
       - "3888:3888"
-    image: debezium/zookeeper:1.2
+    image: debezium/zookeeper:1.3
 
   kafka:
     container_name: kafka
-    image: debezium/kafka:1.2
+    image: debezium/kafka:1.3
     environment:
       ZOOKEEPER_CONNECT: zookeeper
       KAFKA_MESSAGE_MAX_BYTES: 10485760
@@ -38,7 +38,7 @@ services:
     container_name: apicurio
     image: apicurio/apicurio-registry-mem:1.3.0.Final
     ports:
-    - "8081:8081"
+    - "8082:8080"
 
 
   connect:
@@ -55,11 +55,11 @@ services:
       CONNECT_PRODUCER_MAX_REQUEST_SIZE: 10485760
       CONNECT_MAX_REQUEST_SIZE: 10485760
       ENABLE_APICURIO_CONVERTERS: 'true'
-      CONNECT_KEY_CONVERTER: io.apicurio.registry.utils.converter.AvroConverter
-      CONNECT_KEY_CONVERTER_APICURIO.REGISTRY_URL: http://apicurio:8081
+      KEY_CONVERTER: io.apicurio.registry.utils.converter.AvroConverter
+      CONNECT_KEY_CONVERTER_APICURIO.REGISTRY_URL: http://apicurio:8080/api
       CONNECT_KEY_CONVERTER_APICURIO.REGISTRY_GLOBAL-ID: io.apicurio.registry.utils.serde.strategy.GetOrCreateIdStrategy
-      CONNECT_VALUE_CONVERTER: io.apicurio.registry.utils.converter.AvroConverter
-      CONNECT_VALUE_CONVERTER_APICURIO_REGISTRY_URL: http://apicurio:8081
+      VALUE_CONVERTER: io.apicurio.registry.utils.converter.AvroConverter
+      CONNECT_VALUE_CONVERTER_APICURIO_REGISTRY_URL: http://apicurio:8080/api
       CONNECT_VALUE_CONVERTER_APICURIO_REGISTRY_GLOBAL-ID: io.apicurio.registry.utils.serde.strategy.GetOrCreateIdStrategy
     depends_on:
       - postgres
@@ -68,5 +68,3 @@ services:
       - apicurio
     ports:
       - "8083:8083"
-
-#"curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ -d "{ \"name\": \"test-connector\", \"config\": { \"connector.class\": \"io.debezium.connector.postgresql.PostgresConnector\", \"tasks.max\": \"1\", \"database.hostname\": \"postgres\", \"database.port\": \"5432\", \"database.user\": \"postgres\", \"database.password\": \"postgres\", \"database.dbname\": \"testDbTrunk\",\"database.server.id\": \"11112\", \"database.server.name\": \"testDbTrunk\", \"database.whitelist\": \"testDbTrunk\", \"database.history.kafka.bootstrap.servers\":\"kafka:9092\", \"database.history.kafka.topic\": \"dbhistory.testDbTrunk\", \"tasks.max\": \"1\", \"max.queue.size\": \"81290\",\"max.batch.size\": \"20480\", \"plugin.name\": \"pgoutput\"}}""
