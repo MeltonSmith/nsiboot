@@ -31,14 +31,23 @@ services:
       - zookeeper
     volumes:
       - C:/work/kafkaContainer/logs:/kafka/logs
+      - C:/work/kafkaContainer/data:/kafka/data
     ports:
       - "9092:9092"
 
-  apicurio:
-    container_name: apicurio
-    image: apicurio/apicurio-registry-mem:1.3.0.Final
+  schema-registry:
+    container_name: schema-registry
+    image: confluentinc/cp-schema-registry
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_LISTENERS: http://schema-registry:8081
+    volumes:
+    - C:/work/schemaContainer:/*
+    depends_on:
+      - zookeeper
     ports:
-    - "8082:8080"
+    - "8082:8081"
 
 
   connect:
@@ -55,16 +64,33 @@ services:
       CONNECT_PRODUCER_MAX_REQUEST_SIZE: 10485760
       CONNECT_MAX_REQUEST_SIZE: 10485760
       ENABLE_APICURIO_CONVERTERS: 'true'
-#      KEY_CONVERTER: io.apicurio.registry.utils.converter.AvroConverter
-#      CONNECT_KEY_CONVERTER_APICURIO.REGISTRY_URL: http://apicurio:8080/api
-#      CONNECT_KEY_CONVERTER_APICURIO.REGISTRY_GLOBAL-ID: io.apicurio.registry.utils.serde.strategy.GetOrCreateIdStrategy
-#      VALUE_CONVERTER: io.apicurio.registry.utils.converter.AvroConverter
-#      CONNECT_VALUE_CONVERTER_APICURIO_REGISTRY_URL: http://apicurio:8080/api
-#      CONNECT_VALUE_CONVERTER_APICURIO_REGISTRY_GLOBAL-ID: io.apicurio.registry.utils.serde.strategy.GetOrCreateIdStrategy
+      KEY_CONVERTER: io.apicurio.registry.utils.converter.AvroConverter
+      VALUE_CONVERTER: io.apicurio.registry.utils.converter.AvroConverter
+      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
     depends_on:
       - postgres
       - zookeeper
       - kafka
-      - apicurio
+      - schema-registry
     ports:
       - "8083:8083"
+
+#  avro-consumer:
+#    container_name: avro-consumer
+#    image: debezium/connect:1.3
+#    environment:
+#      GROUP_ID: 1
+#      CONFIG_STORAGE_TOPIC: "avroConsumerStorageTopic"
+#      OFFSET_STORAGE_TOPIC: "avroConsumerOffsetTopic"
+#      BOOTSTRAP_SERVERS: "kafka:9092"
+##    command:
+##      sh -c "/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka:9092 --property print.key=true --formatter io.confluent.kafka.formatter.AvroMessageFormatter --property schema.registry.url=http://schema-registry:8081 --topic localpostgres.public.accessmatrix_t"
+#    depends_on:
+#      - postgres
+#      - connect
+#      - zookeeper
+#      - kafka
+#      - schema-registry
+#    ports:
+#        - "8084:8084"
