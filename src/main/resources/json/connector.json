@@ -1,5 +1,5 @@
 {
-  "name": "avroConnector2",
+  "name": "avroSchemaRegistryConnector",
   "config":
   {
     "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
@@ -11,7 +11,7 @@
     "database.dbname": "testDbTrunk",
     "database.server.id": "1111144",
     "database.server.name": "localpostgres",
-    "table.include.list": "testDbTrunk",
+    "database.whitelist": "testDbTrunk",
     "database.history.kafka.bootstrap.servers": "kafka:9092",
     "database.history.kafka.topic": "dbhistory.testDbTrunk",
     "plugin.name": "pgoutput",

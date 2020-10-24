@@ -42,8 +42,8 @@ services:
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: zookeeper:2181
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_LISTENERS: http://schema-registry:8081
-    volumes:
-    - C:/work/schemaContainer:/*
+#    volumes:
+#    - C:/work/schemaContainer:/..
     depends_on:
       - zookeeper
     ports:
@@ -63,9 +63,9 @@ services:
       OFFSET_FLUSH_INTERVAL_MS: 10000
       CONNECT_PRODUCER_MAX_REQUEST_SIZE: 10485760
       CONNECT_MAX_REQUEST_SIZE: 10485760
-      ENABLE_APICURIO_CONVERTERS: 'true'
-      KEY_CONVERTER: io.apicurio.registry.utils.converter.AvroConverter
-      VALUE_CONVERTER: io.apicurio.registry.utils.converter.AvroConverter
+#      ENABLE_APICURIO_CONVERTERS: 'true'
+      KEY_CONVERTER: io.confluent.connect.avro.AvroConverter
+      VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
       CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
       CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
     depends_on:
