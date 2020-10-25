@@ -1,0 +1,11 @@
+- quite slow
+- got heap OOM error after processing of 200k of addresshome_t lines
+
+#To retrieve schema from the registry: use
+$ docker run --rm --tty \
+    --network resources_default \
+    debezium/tooling bash -c 'http http://apicurio:8080/ids/64 | jq .'
+
+$ docker run --rm --tty \
+    --network resources_default \
+    debezium/tooling bash -c 'http http://apicurio:8080/artifacts/localpostgres.public.accessmatrix_t | jq .'

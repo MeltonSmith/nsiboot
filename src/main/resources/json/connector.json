@@ -1,5 +1,5 @@
 {
-  "name": "avroConnector",
+  "name": "avroConnector5",
   "config":
   {
     "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
@@ -17,11 +17,12 @@
     "plugin.name": "pgoutput",
     "max.queue.size": "81290",
     "max.batch.size": "20480",
-    "key.converter": "io.confluent.connect.avro.AvroConverter",
-    "key.converter.schema.registry.url": "http://apicurio:8080/api",
-    "value.converter": "io.confluent.connect.avro.AvroConverter",
-    "value.converter.schema.registry.url": "http://apicurio:8080/api",
-    "key.converter.apicurio.registry.global-id": "io.apicurio.registry.utils.serde.strategy.GetOrCreateIdStrategy",
-    "value.converter.apicurio.registry.global-id": "io.apicurio.registry.utils.serde.strategy.GetOrCreateIdStrategy"
+    "apicurio.registry.url": "http://apicurio:8080",
+    "key.converter": "io.apicurio.registry.utils.converter.ExtJsonConverter",
+    "key.converter.apicurio.registry.url": "http://apicurio:8080/api",
+    "key.converter.apicurio.registry.global-id": "io.apicurio.registry.utils.serde.strategy.AutoRegisterIdStrategy",
+    "value.converter.apicurio.registry.url": "http://apicurio:8080/api",
+    "value.converter": "io.apicurio.registry.utils.converter.ExtJsonConverter",
+    "value.converter.apicurio.registry.global-id": "io.apicurio.registry.utils.serde.strategy.AutoRegisterIdStrategy"
   }
 }

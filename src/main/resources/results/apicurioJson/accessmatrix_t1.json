@@ -1,0 +1,33 @@
+Using apicurio with Json converter. Accessmatrix_t result:
+
+
+{"schemaId":25131,"payload":{"id":1503509395403710021}}
+
+{
+  "schemaId": 25132,
+  "payload": {
+    "before": null,
+    "after": {
+      "id": 1503509395403710000,
+      "discriminator": 3653,
+      "role_id": 1503504639637590000,
+      "permissionkey_p": "BBSSSSSBsSSSdsdsB"
+    },
+    "source": {
+      "version": "1.3.0.Final",
+      "connector": "postgresql",
+      "name": "localpostgres",
+      "ts_ms": 1603626703070,
+      "snapshot": "true",
+      "db": "testDbTrunk",
+      "schema": "public",
+      "table": "accessmatrix_t",
+      "txId": 23170,
+      "lsn": 1080792272,
+      "xmin": null
+    },
+    "op": "r",
+    "ts_ms": 1603626703070,
+    "transaction": null
+  }
+}

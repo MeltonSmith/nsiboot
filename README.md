@@ -105,10 +105,14 @@ Monitoring
       docker run -it --rm --name watcher --link zookeeper:zookeeper --link kafka:kafka debezium/kafka:1.3 watch-topic -a -k testDbTrunk.public.abstractparagraphkey_t      
       
       (default networking with net created by docker compose)
-      docker run -it --rm --name watcher --net resources_default -e ZOOKEEPER_CONNECT=zookeeper:2181 -e KAFKA_BROKER=kafka:9092 debezium/kafka:1.3 watch-topic -a -k testDbTrunk.public.abstractparagraphkey_t      
+      docker run -it --rm --name watcher --net resources_default -e ZOOKEEPER_CONNECT=zookeeper:2181 -e KAFKA_BROKER=kafka:9092 debezium/kafka:1.3 watch-topic -a -k localpostgres.public.abstractparagraphkey_t      
+      docker run -it --rm --name watcher --net resources_default -e ZOOKEEPER_CONNECT=zookeeper:2181 -e KAFKA_BROKER=kafka:9092 debezium/kafka:1.3 watch-topic -a -k localpostgres.public.accessmatrix_t      
      
      #list of topics
        docker run -it --rm --net resources_default -e ZOOKEEPER_CONNECT=zookeeper:2181  debezium/kafka:1.3 list-topics
       
      #monitoring via a standart consumer (use exec bash inside of kafka container) in case of a separate machine with Kafka replace 0.0.0.0 with localhost
        bin/kafka-console-consumer.sh --topic testDbTrunk.public.abstractemployeeextract_t --from-beginning --bootstrap-server 0.0.0.0:9092
+       
+       
+     docker run --rm --tty --network tutorial_default debezium/tooling bash -c \"http http://apicurio:8080/ids/64 | jq .\"  
