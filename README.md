@@ -6,7 +6,7 @@ Nsi based on working with Apache Kafka
 
 Текущие TODO:
 --------------------------------------
-    - make a descrption for Avro converting
+    - Apicurio is quite slow. Dont have any idea how to read data in console using avroFormatter
 
 
 PostgreSQL

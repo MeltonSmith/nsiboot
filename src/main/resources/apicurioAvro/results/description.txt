@@ -1,0 +1,4 @@
+quite slow (100 rows for 2-3 secs)
+haven't seen any benefits in terms of space
+
+how to use avroConversion in consumer?
