@@ -1,0 +1,9 @@
+quite fast (the whole sync is done for 15 minutes (analyctics db)))
+stores schemas in kafka herself
+
+to watch the topics decoded (supposed to work but it doesnt):
+/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka:9092 --property print.key=true --formatter io.confluent.kafka.formatter.AvroMessageFormatter --property schema.registry.url=http://schema-registry:8082 --topic localpostgres.public.accessmatrix_t
+
+
+disadvantages
+   - can be not-free
