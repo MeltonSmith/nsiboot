@@ -37,7 +37,11 @@ services:
 
   apicurio:
     container_name: apicurio
-    image: apicurio/apicurio-registry-mem:1.3.0.Final
+    image: apicurio/apicurio-registry-kafka:1.3.1.Final
+      environment:
+        KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+      depends_on:
+        - kafka
     ports:
     - "8082:8080"
 
