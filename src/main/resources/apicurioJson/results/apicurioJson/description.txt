@@ -1,6 +1,5 @@
 - quite slow
-- got heap OOM error after processing of 200k of addresshome_t lines
-
+- 20k rows for 2 minutes
 #To retrieve schema from the registry:
 use gui or:
 
