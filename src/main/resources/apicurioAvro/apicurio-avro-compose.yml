@@ -7,7 +7,8 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
     volumes:
-      - C:/work/postgresContainer/data:/var/lib/postgresql/data
+#      - C:/work/postgresContainer/data:/var/lib/postgresql/data    WIN
+      - /media/yarahmatullin/SSD/work/nsiBootData/postgresContainer/data:/var/lib/postgresql/data
     image: postgres:12
 
   zookeeper:
@@ -30,18 +31,20 @@ services:
     depends_on:
       - zookeeper
     volumes:
-      - C:/work/kafkaContainer/logs:/kafka/logs
-      - C:/work/kafkaContainer/data:/kafka/data
+#      - C:/work/kafkaContainer/logs:/kafka/logs
+#      - C:/work/kafkaContainer/data:/kafka/data
+      - /media/yarahmatullin/SSD/work/nsiBootData/kafkaContainer/logs:/kafka/logs
+      - /media/yarahmatullin/SSD/work/nsiBootData/kafkaContainer/data:/kafka/data
     ports:
       - "9092:9092"
 
   apicurio:
     container_name: apicurio
     image: apicurio/apicurio-registry-kafka:1.3.1.Final
-      environment:
-        KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
-      depends_on:
-        - kafka
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+    depends_on:
+      - kafka
     ports:
     - "8082:8080"
 
