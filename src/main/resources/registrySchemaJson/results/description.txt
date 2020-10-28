@@ -1,0 +1,1 @@
+doesnt' work. With such a configuration (using the json serialization rather than the avro) it does not transfer schema data to schema registry.
