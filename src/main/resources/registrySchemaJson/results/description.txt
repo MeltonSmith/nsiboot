@@ -1,0 +1,12 @@
+Speed +- 60k rows for 12 sec
+
+To make the confluent json schema converter work I did the following:
+
+
+- Forked the original debezium/connect:1.3 image (I put in kafta/libs directory
+    there libs which are required by the confluent json converter)
+
+https://hub.docker.com/r/meltsmith/debez-connect-json-schema
+
+- Deployed the confluent registry schema
+- configured my worker in Kafka connect service with the connector/connector.json params

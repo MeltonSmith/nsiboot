@@ -1,0 +1,31 @@
+u{"id":1497069551280465652}		
+
+v
+{
+  "before": null,
+  "after": {
+    "id": 1497069551280465700,
+    "discriminator": 1780,
+    "code_p": "44",
+    "yeardistribution_id": 1497069540788414200,
+    "number_p": 4,
+    "shorttitle_p": "IV",
+    "title_p": "IV четверть"
+  },
+  "source": {
+    "version": "1.3.0.Final",
+    "connector": "postgresql",
+    "name": "localpostgres",
+    "ts_ms": 1604157676580,
+    "snapshot": "last",
+    "db": "testDbTrunk",
+    "schema": "public",
+    "table": "yeardistributionpart_t",
+    "txId": 22691,
+    "lsn": 1061861912,
+    "xmin": null
+  },
+  "op": "r",
+  "ts_ms": 1604157676580,
+  "transaction": null
+}
