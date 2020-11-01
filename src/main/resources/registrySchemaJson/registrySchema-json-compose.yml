@@ -65,8 +65,8 @@ services:
       OFFSET_FLUSH_INTERVAL_MS: 10000
       CONNECT_PRODUCER_MAX_REQUEST_SIZE: 10485760
       CONNECT_MAX_REQUEST_SIZE: 10485760
-      KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
-      VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      KEY_CONVERTER: io.confluent.connect.json.JsonSchemaConverter
+      VALUE_CONVERTER: io.confluent.connect.json.JsonSchemaConverter
       CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
       CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
     depends_on:
