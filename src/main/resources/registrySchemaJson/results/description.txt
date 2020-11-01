@@ -1,4 +1,6 @@
 Speed +- 60k rows for 12 sec
+Analytics db synchronization time - 49 minutes
+kafka data folder size - 28 GB
 
 To make the confluent json schema converter work I did the following:
 

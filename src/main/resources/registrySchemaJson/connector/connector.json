@@ -1,5 +1,5 @@
 {
-  "name": "avroSchemaRegistryConnector",
+  "name": "jsonSchemaRegistryConnector",
   "config":
   {
     "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
