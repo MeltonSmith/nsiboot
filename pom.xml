@@ -58,6 +58,14 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+<!--        SERDE-->
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-json-schema-serializer</artifactId>
+            <version>5.5.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -7,15 +7,18 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
     volumes:
-#            - C:/work/postgresContainer/data:/var/lib/postgresql/data
-      - /media/yarahmatullin/SSD/work/nsiBootData/postgresContainer/data:/var/lib/postgresql/data
+            - C:/work/postgresContainer/data:/var/lib/postgresql/data
+#      - /media/yarahmatullin/SSD/work/nsiBootData/postgresContainer/data:/var/lib/postgresql/data
     image: postgres:12
 
   zookeeper:
     container_name: zookeeper
     volumes:
-    - /media/yarahmatullin/SSD/work/nsiBootData/zookeeperContainer/data:/zookeeper/data
-    - /media/yarahmatullin/SSD/work/nsiBootData/zookeeperContainer/txns:/zookeeper/txns
+    - C:/work/zookeepercontainer/data:/zookeeper/data
+    - C:/work/zookeepercontainer/txns:/zookeeper/txns
+
+#    - /media/yarahmatullin/SSD/work/nsiBootData/zookeeperContainer/data:/zookeeper/data
+#    - /media/yarahmatullin/SSD/work/nsiBootData/zookeeperContainer/txns:/zookeeper/txns
     ports:
       - "2181:3888"
       - "2888:3888"
@@ -35,9 +38,9 @@ services:
       - zookeeper
     volumes:
 #            - C:/work/kafkaContainer/logs:/kafka/logs
-#            - C:/work/kafkaContainer/data:/kafka/data
+            - C:/work/kafkaContainer/data:/kafka/data
 #      - /media/yarahmatullin/SSD/work/nsiBootData/kafkaContainer/logs:/kafka/logs
-      - /media/yarahmatullin/SSD/work/nsiBootData/kafkaContainer/data:/kafka/data
+#      - /media/yarahmatullin/SSD/work/nsiBootData/kafkaContainer/data:/kafka/data
     ports:
       - "9092:9092"
 
