@@ -20,14 +20,14 @@ import java.util.Properties;
 
 @Configuration
 public class KStreamDemoConfig {
+//
+//    @Bean
+//    public KStreamService kStreamService(){
+//       return new KStreamService();
+//    }
 
     @Bean
-    public KStreamService kStreamService(){
-       return new KStreamService();
-    }
-
-    @Bean
-    public Properties kStreamServiceProperties() {
+    public StreamsConfig streamConfig() {
         Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, "KStreamDemo");
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "KStreamDemo_group_id");
@@ -42,13 +42,17 @@ public class KStreamDemoConfig {
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         props.put(StreamsConfig.REPLICATION_FACTOR_CONFIG, 1);
 //        props.put(StreamsConfig.DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG, StockTransactionTimestampExtractor.class);
-        return props;
+
+        return new StreamsConfig(props);
     }
 
     @Bean
     public Serde yearDistributionPartSerde(){
-        var serializer = new KafkaJsonSchemaSerializer<YearDistributionPart>();
-        var deserializer = new KafkaJsonSchemaDeserializer<YearDistributionPart>();
-        return Serdes.serdeFrom(serializer, deserializer);
+//        var serializer = new KafkaJsonSchemaSerializer<YearDistributionPart>();
+//        var deserializer = new KafkaJsonSchemaDeserializer<YearDistributionPart>();
+
+        return Serdes.String();
+
+//        return Serdes.serdeFrom(serializer, deserializer);
     }
 }
