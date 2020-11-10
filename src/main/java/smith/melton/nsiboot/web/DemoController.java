@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import smith.melton.nsiboot.KStream.KStreamService;
 
 /**
@@ -12,7 +13,7 @@ import smith.melton.nsiboot.KStream.KStreamService;
  * @since 09.11.2020
  */
 @Controller
-@RequestMapping("/demo")
+@RequestMapping("/")
 public class DemoController {
 
     final KStreamService kStreamService;
@@ -28,7 +29,11 @@ public class DemoController {
     }
 
     @PostMapping
-    public void tryMe(){
-        kStreamService.start();
+    public String action(@RequestParam(value = "action") String action){
+        if (action.equals("start"))
+            kStreamService.start();
+        else
+            kStreamService.stop();
+        return "redirect:/";
     }
 }

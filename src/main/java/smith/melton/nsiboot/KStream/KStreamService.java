@@ -17,6 +17,7 @@ public class KStreamService {
 
     final Serde<String> yearDistributionPartSerde;
     final StreamsConfig streamConfig;
+    KafkaStreams streams;
 
     public KStreamService(Serde<String> yearDistributionPartSerde, StreamsConfig streamConfig) {
         this.yearDistributionPartSerde = yearDistributionPartSerde;
@@ -32,9 +33,14 @@ public class KStreamService {
                 .to("streamTopicYearDistributionPart_t", Produced.with(yearDistributionPartSerde, yearDistributionPartSerde));
 
         //TODO deprecated constructor
-        KafkaStreams streams = new KafkaStreams(streamsBuilder.build(), streamConfig);
+        streams = new KafkaStreams(streamsBuilder.build(), streamConfig);
         streams.start();
 
     }
 
+    public void stop(){
+      if (streams != null)
+            streams.close();
+
+    }
 }
